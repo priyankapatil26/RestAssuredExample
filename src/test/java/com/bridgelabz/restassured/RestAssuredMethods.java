@@ -2,8 +2,6 @@ package com.bridgelabz.restassured;
 
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
-
-import static com.sun.webkit.perf.WCGraphicsPerfLogger.log;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 
