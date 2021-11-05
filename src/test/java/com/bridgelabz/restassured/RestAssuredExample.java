@@ -3,7 +3,6 @@ package com.bridgelabz.restassured;
 import io.restassured.http.ContentType;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
-
 import static io.restassured.RestAssured.*;
 
 public class RestAssuredExample {
