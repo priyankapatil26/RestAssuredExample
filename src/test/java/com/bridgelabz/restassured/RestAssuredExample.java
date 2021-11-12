@@ -1,6 +1,9 @@
 package com.bridgelabz.restassured;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 import static io.restassured.RestAssured.*;
@@ -8,75 +11,75 @@ import static io.restassured.RestAssured.*;
 public class RestAssuredExample {
 
     @Test
-    public void getMethod() {
-        baseURI = "http://localhost:3000/";
-        given().
-                param("firstName", "Priya").
-                get("/users").then().statusCode(200).log().all();
-
+    public void getTest(){
+        // to get all the get all details or specific detail through ID
+        Response response = RestAssured.get("http://localhost:3000/users/");
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
     }
 
     @Test
-    public void postMethod() {
-        JSONObject request = new JSONObject();
-        request.put("firstName", "John");
-        request.put("lastName", "Cooper");
-        request.put("subjectId", 1);
-        baseURI = "http://localhost:3000/";
-        given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
-                header("Content-Type", "application/json").
-                body(request.toJSONString()).
-                when().
-                    post("/users").
-                then().
-                    statusCode(201).
-                    log().all();
+    public  void postTest(){
+        // post is to create
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("firstName", "John");
+        jsonObject.put("lastName", "sample");
+        jsonObject.put("subjectId", 1);
+        request.body(jsonObject.toJSONString());
+        Response response = request.post("http://localhost:3000/users");
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
     }
 
     @Test
-    public void putMethod() {
-        JSONObject request = new JSONObject();
-        request.put("firstName", "Mary");
-        request.put("lastName", "Cooper");
-        request.put("subjectId", 2);
-
-        baseURI = "http://localhost:3000/";
-        given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
-                body(request.toJSONString()).
-                when().
-                    put("/users/2").
-                then().
-                    statusCode(200).
-                    log().all();
+    public  void putTest(){
+        // put is to update
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("firstName", "Mary");
+        jsonObject.put("lastName", "cooper");
+        jsonObject.put("subjectId", 2);
+        request.body(jsonObject.toJSONString());
+        Response response = request.put("http://localhost:3000//users/2");
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
     }
 
     @Test
-    public void patchMethod() {
-        JSONObject request = new JSONObject();
-        request.put("lastName", "JackMan");
-
-        baseURI = "http://localhost:3000/";
-            given().
-                contentType(ContentType.JSON).
-                accept(ContentType.JSON).
-                body(request.toJSONString()).
-                when().
-                    patch("/users/4").
-                then().
-                    statusCode(200).
-                    log().all();
+    public  void patchTest(){
+        // put is to update
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("lastName", "aaaaa");
+        request.body(jsonObject.toJSONString());
+        Response response = request.patch("http://localhost:3000///users/4");
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
     }
 
     @Test
-    public void deleteMethod() {
-        baseURI = "http://localhost:3000/";
-        when().
-                delete("users/2").
-                then().
-                statusCode(204);
+    public void deleteTest(){
+        // delete is to delete
+        RequestSpecification request = RestAssured.given();
+        Response response = request.delete("http://localhost:3000/users/6");
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
     }
+
+    @Test
+    public void basicAuthTest(){
+
+        RestAssured.baseURI="http://localhost:3000/posts/";
+        RequestSpecification request =   RestAssured.given()
+                .auth().preemptive().basic("username","password");
+        Response response = request.get();
+        System.out.println(response.getStatusCode());
+        System.out.println(response.asString());
+
+    }
+
 }
