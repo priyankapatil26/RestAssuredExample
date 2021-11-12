@@ -12,7 +12,7 @@ public class RestAssuredExample {
 
     @Test
     public void getTest(){
-        // to get all the get all details or specific detail through ID
+        // to retrieve data
         Response response = RestAssured.get("http://localhost:3000/users/");
         System.out.println(response.getStatusCode());
         System.out.println(response.asString());
@@ -20,7 +20,7 @@ public class RestAssuredExample {
 
     @Test
     public  void postTest(){
-        // post is to create
+        // to create data
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         JSONObject jsonObject = new JSONObject();
@@ -35,7 +35,7 @@ public class RestAssuredExample {
 
     @Test
     public  void putTest(){
-        // put is to update
+        // to update data
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         JSONObject jsonObject = new JSONObject();
@@ -50,7 +50,7 @@ public class RestAssuredExample {
 
     @Test
     public  void patchTest(){
-        // put is to update
+        // to update data
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         JSONObject jsonObject = new JSONObject();
@@ -63,7 +63,7 @@ public class RestAssuredExample {
 
     @Test
     public void deleteTest(){
-        // delete is to delete
+        // to delete data
         RequestSpecification request = RestAssured.given();
         Response response = request.delete("http://localhost:3000/users/6");
         System.out.println(response.getStatusCode());
